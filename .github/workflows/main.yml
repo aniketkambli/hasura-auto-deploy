@@ -12,6 +12,8 @@ jobs:
       HASURA_GRAPHQL_ADMIN_SECRET: Dc0ftxq7sXnG9DfbqABY4dSyHGPb1lRTgGOWlFlNq4C9zoLB5zK6tEmV28nCEog4
       HASURA_GRAPHQL_ENDPOINT: https://next-gannet-85.hasura.app
     steps:
+      - name: Find my-file.txt
+        run: find $GITHUB_WORKSPACE -name config.yaml
       - name: Download Hasura CLI
         run: |
           curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
