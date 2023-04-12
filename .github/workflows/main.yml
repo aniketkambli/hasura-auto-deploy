@@ -16,12 +16,17 @@ jobs:
         run: |
           curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
       - name: Verify Hasura CLI version
-        run: hasura version
+        run: |
+          hasura version
       - name : list files
-        run: la
+        run: |
+          la
       - name: Apply migrations
-        run: hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
+        run: |
+          hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
       - name: Apply metadata
-        run: hasura metadata apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
+        run: |
+          hasura metadata apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
       - name: Reload metadata
-        run: hasura metadata reload --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
+        run: |
+          hasura metadata reload --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
