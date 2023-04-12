@@ -1,34 +1,27 @@
-name: Deploy Hasura Endpoint
+name: Deploy metadata to prod
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
-  deploy:
+  my-job:
     runs-on: ubuntu-latest
-
+    env:
+      HASURA_GRAPHQL_ADMIN_SECRET: Dc0ftxq7sXnG9DfbqABY4dSyHGPb1lRTgGOWlFlNq4C9zoLB5zK6tEmV28nCEog4
+      HASURA_GRAPHQL_ENDPOINT: https://next-gannet-85.hasura.app
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up environment variables
-        env:
-          HASURA_ENDPOINT: https://next-gannet-85.hasura.app/v1/graphql
-          HASURA_ADMIN_SECRET: Dc0ftxq7sXnG9DfbqABY4dSyHGPb1lRTgGOWlFlNq4C9zoLB5zK6tEmV28nCEog4
-        run: |
-          echo "HASURA_ENDPOINT=${HASURA_ENDPOINT}" >> $GITHUB_ENV
-          echo "HASURA_ADMIN_SECRET=${HASURA_ADMIN_SECRET}" >> $GITHUB_ENV
-
-      - name: Apply Hasura migration
-        run: |
-          curl -X POST ${{ env.HASURA_ENDPOINT }} -H "Content-Type: application/json" -H "x-hasura-admin-secret: ${{ env.HASURA_ADMIN_SECRET }}" -d '{"type": "migrate", "args": {"database": "default"}}'
-
-      - name: Apply Hasura metadata
-        run: |
-          curl -X POST ${{ env.HASURA_ENDPOINT }} -H "Content-Type: application/json" -H "x-hasura-admin-secret: ${{ env.HASURA_ADMIN_SECRET }}" -d '{"type": "metadata_apply", "args": {"allow_inconsistent_metadata": true}}'
-
-      - name: Reload Hasura metadata
-        run: |
-          curl -X POST ${{ env.HASURA_ENDPOINT }} -H "Content-Type: application/json" -H "x-hasura-admin-secret: ${{ env.HASURA_ADMIN_SECRET }}" -d '{"type": "metadata_reload"}'
+      - name: Set up Hasura CLI
+        uses: hasura/action@v1.4.1
+        with:
+          version: latest
+          cli_path: /usr/local/bin/hasura
+      - name: Apply migrations
+        run: hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
+      - name: Apply metadata
+        run: hasura metadata apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
+      - name: Reload metadata
+        run: hasura metadata reload --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
