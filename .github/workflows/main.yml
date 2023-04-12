@@ -21,8 +21,8 @@ jobs:
       - name : list files
         run: |
           echo "Current working files is $(pwd)"
-          cd ..
           ls -la
+          cd ..
           echo "Current working files is $(pwd)"
           ls -la
           echo "Current working files is $(ls)"
