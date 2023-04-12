@@ -20,7 +20,7 @@ jobs:
           hasura version
       - name : list files
         run: |
-          ls
+          cd ~
       - name: Apply migrations
         run: |
           hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
