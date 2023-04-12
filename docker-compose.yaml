@@ -29,4 +29,3 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
 volumes:
   postgres-data:
-  cockroach-data:
