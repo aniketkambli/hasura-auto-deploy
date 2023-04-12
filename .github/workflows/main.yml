@@ -12,6 +12,8 @@ jobs:
       HASURA_GRAPHQL_ADMIN_SECRET: Dc0ftxq7sXnG9DfbqABY4dSyHGPb1lRTgGOWlFlNq4C9zoLB5zK6tEmV28nCEog4
       HASURA_GRAPHQL_ENDPOINT: https://next-gannet-85.hasura.app
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Find my-file.txt
         run: |
           echo "File location: $(find / -name config.yaml)"
