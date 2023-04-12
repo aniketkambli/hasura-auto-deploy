@@ -3,7 +3,7 @@ name: Deploy metadata to prod
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   my-job:
