@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Set up Hasura CLI
-        uses: hasura/action@v1.4.1
+        uses: hasura/action@master
         with:
           version: latest
           cli_path: /usr/local/bin/hasura
