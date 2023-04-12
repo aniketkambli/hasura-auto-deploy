@@ -20,10 +20,11 @@ jobs:
           hasura version
       - name : list files
         run: |
-          cd $GITHUB_WORKSPACE
-          echo "Current working directory is $(pwd)"
-          cd hasura-auto-deploy
           echo "Current working files is $(pwd)"
+          echo "Current working files is $(ls)"
+          cd $GITHUB_WORKSPACE
+          ls
+          echo "Current working directory is $(pwd)"
       - name: Apply migrations
         run: |
           hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --database-name default
