@@ -12,6 +12,8 @@ jobs:
       HASURA_GRAPHQL_ADMIN_SECRET: Dc0ftxq7sXnG9DfbqABY4dSyHGPb1lRTgGOWlFlNq4C9zoLB5zK6tEmV28nCEog4
       HASURA_GRAPHQL_ENDPOINT: https://next-gannet-85.hasura.app
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Download Hasura CLI
         run: |
           curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
@@ -20,7 +22,15 @@ jobs:
           hasura version
       - name : list files
         run: |
+          echo "Current working files is $(pwd)"
+          ls -la
+          cd ..
+          echo "Current working files is $(pwd)"
+          ls -la
+          echo "Current working files is $(ls)"
           cd $GITHUB_WORKSPACE
+          ls
+          echo "Current working directory is $(pwd)"
       - name: Apply migrations
         run: |
           hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --database-name default
