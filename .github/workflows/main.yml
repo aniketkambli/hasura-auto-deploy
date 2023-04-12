@@ -20,10 +20,10 @@ jobs:
           hasura version
       - name : list files
         run: |
-          cd ~
+          cd $GITHUB_WORKSPACE
       - name: Apply migrations
         run: |
-          hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
+          hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --database-name default
       - name: Apply metadata
         run: |
           hasura metadata apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
