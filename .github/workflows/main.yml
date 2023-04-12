@@ -21,6 +21,8 @@ jobs:
       - name : list files
         run: |
           cd $GITHUB_WORKSPACE
+          echo "Current working directory is $(pwd)"
+          echo "Current working files is $(ls)"
       - name: Apply migrations
         run: |
           hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --database-name default
