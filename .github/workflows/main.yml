@@ -29,7 +29,6 @@ jobs:
           echo ::set-output name=diff::$(hasura metadata diff --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --output-format json)
   manual-approval:
     runs-on: ubuntu-latest
-    if: steps.hasura-migrations.outcome == 'success'
     needs: hasura-migrations
     steps:
       - name: Wait for approval
@@ -45,7 +44,6 @@ jobs:
           echo "Approval status: ${{ steps.approval.outputs.approved }}"
   deploy:
     runs-on: ubuntu-latest
-    if: steps.manual-approval.outcome == 'success'
     needs: manual-approval
     env:
       HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
