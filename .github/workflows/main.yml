@@ -26,6 +26,12 @@ jobs:
       - name: Run hasura metadata diff
         run: |
           hasura metadata diff --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
+      - name: Manual approval
+        if: always()
+        uses: udaniketk/wait-for-user-input@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          message: "Please review the changes and approve the deployment"
       - name: Apply migrations
         run: |
           hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --database-name default
