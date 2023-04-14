@@ -20,17 +20,12 @@ jobs:
       - name: Verify Hasura CLI version
         run: |
           hasura version
-      - name : list files
+      - name: Run dry migrations
         run: |
-          echo "Current working files is $(pwd)"
-          ls -la
-          cd ..
-          echo "Current working files is $(pwd)"
-          ls -la
-          echo "Current working files is $(ls)"
-          cd $GITHUB_WORKSPACE
-          ls
-          echo "Current working directory is $(pwd)"
+          hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --database-name default --dry-run
+      - name: Run hasura metadata diff
+        run: |
+          hasura metadata diff --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
       - name: Apply migrations
         run: |
           hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --database-name default
