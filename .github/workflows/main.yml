@@ -28,7 +28,7 @@ jobs:
           hasura migrate apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --database-name default
       - name: Apply metadata
         run: |
-          hasura metadata apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --metadata-file ${{ steps.save-metadata-diff.outputs.diff }}
+          hasura metadata apply --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
       - name: Reload metadata
         run: |
           hasura metadata reload --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
