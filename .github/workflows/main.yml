@@ -31,17 +31,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: hasura-migrations
     steps:
-      - name: Wait for approval
-        id: approval
-        uses: peter-evans/wait-for-approval@v1
+      - name: Request approval
+        if: github.event_name == 'pull_request'
+        uses: actions/request-reviews@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          message: Please review the changes and approve or reject this deployment.
-          reviewers: udaniketk, aniketkambli # Add the GitHub usernames of the people who should review the changes here
-          timeout-hours: 1
-      - name: Check approval status
-        run: |
-          echo "Approval status: ${{ steps.approval.outputs.approved }}"
+          reviewers: udaniketk, udsnehaln
+      - name: Wait for approval
+        if: github.event_name == 'pull_request'
+        uses: actions/await-approval@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          timeout-minutes: 60
   deploy:
     runs-on: ubuntu-latest
     needs: manual-approval
