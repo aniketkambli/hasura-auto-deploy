@@ -23,11 +23,6 @@ jobs:
       - name: Run hasura metadata diff
         run: |
           hasura metadata diff --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }}
-      - name: Save metadata diff
-        id: save-metadata-diff
-        run: |
-          echo ::set-output name=diff::$(hasura metadata diff --endpoint ${{ env.HASURA_GRAPHQL_ENDPOINT }} --admin-secret ${{ env.HASURA_GRAPHQL_ADMIN_SECRET }} --output-format json)
-          timeout-minutes: 60
   deploy:
     runs-on: ubuntu-latest
     env:
