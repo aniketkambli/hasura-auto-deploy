@@ -34,6 +34,7 @@ jobs:
     env:
       HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
       HASURA_GRAPHQL_ENDPOINT: https://next-gannet-85.hasura.app
+    needs: hasura-migrations
     steps:
       - name: Apply migrations
         run: |
