@@ -30,7 +30,6 @@ jobs:
           timeout-minutes: 60
   deploy:
     runs-on: ubuntu-latest
-    needs: manual-approval
     env:
       HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
       HASURA_GRAPHQL_ENDPOINT: https://next-gannet-85.hasura.app
